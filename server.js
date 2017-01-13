@@ -2,9 +2,15 @@ var express = require('express')
 var app = express()
 var MongoClient = require('mongodb').MongoClient
 
-MongoClient.connect('link-to-mongodb', function(err, database) {
-
-})
+var url = process.env.MONGOLAB_URI;
+  MongoClient.connect(url, function (err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    console.log('Connection established to', url);
+    db.close();
+  }
+});
 
 app.get('/', function (req, res) {
   res.end("Hello world again!")
